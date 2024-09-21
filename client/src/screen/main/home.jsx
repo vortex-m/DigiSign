@@ -3,7 +3,20 @@ import Bg from "../../assets/png/bg-feature.png";
 import { FaFileSignature, FaShieldAlt, FaUserCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Home() {
+function Home({ isLogged }) {
+ const  UploadeHandel = () => {
+  try {
+      if (isLogged) {
+        alert("You are logged in!");
+      } else {
+        alert("Please Login...");
+      }
+  } catch (error) {
+    console.error(error);
+    alert("An error occurred while processing your request.");
+    
+  }
+  };
   return (
     <div className="relative min-h-[90svh] z-0">
       <img
@@ -19,21 +32,25 @@ function Home() {
           Sign and verify documents securely.
         </p>
         <div className="mt-6 space-x-4">
-          <Link to="/upload">
-            <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
-              Upload Document
-            </button>
-          </Link>
-          <Link to="/auth/login">
-            <button className="px-6 py-3 bg-gray-200 text-blue-500 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300">
-              Login
-            </button>
-          </Link>
+          {/* <Link to="/upload"> */}
+          <button
+            onClick={UploadeHandel}
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+          >
+            Upload Document
+          </button>
+          {/* </Link> */}
+          {!isLogged && (
+            <Link to="/auth/login">
+              <button className="px-6 py-3 bg-gray-200 text-blue-500 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 
       {/* New Section: Features */}
-      
     </div>
   );
 }

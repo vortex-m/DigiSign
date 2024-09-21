@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "../../assets/png/feature-shape-12.png";
 
-function Navbar() {
+function Navbar({ isLogged }) {
   const [isOpen, setIsOpen] = useState(false);
+  const LogoutHandler = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
 
   return (
     <nav className="fixed backdrop-blur-md w-full z-10">
@@ -73,19 +77,19 @@ function Navbar() {
               <div className="flex space-x-10">
                 <Link
                   to="/"
-                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700 dark:hover:bg-gray-700"
+                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700"
                 >
                   Home
                 </Link>
                 <Link
                   to="/about"
-                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700 dark:hover:bg-gray-700"
+                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700"
                 >
                   About
                 </Link>
                 <Link
                   to="/contact"
-                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700 dark:hover:bg-gray-700"
+                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700"
                 >
                   Contact
                 </Link>
@@ -93,24 +97,35 @@ function Navbar() {
             </div>
           </div>
           <div className="hidden sm:block">
-            <div className="flex space-x-4">
-              <Link
-                to="/auth/login"
-                className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700 dark:hover:bg-gray-700"
-              >
-                Login
-              </Link>
-              <Link
-                to="/auth/register"
-                className="text-white rounded-3xl px-3 py-2 text-lg font-medium bg-gray-600 hover:bg-gray-700 dark:hover:bg-gray-700"
-              >
-                Sign In
-              </Link>
-            </div>
+            {!isLogged ? (
+              <div className="flex space-x-4">
+                <Link
+                  to="/auth/login"
+                  className="text-white px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-700"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/auth/register"
+                  className="text-white rounded-3xl px-3 py-2 text-lg font-medium bg-gray-600 hover:bg-gray-700"
+                >
+                  Sign In
+                </Link>
+              </div>
+            ) : (
+              <div className="flex space-x-4 cursor-pointer">
+                <div
+                  onClick={LogoutHandler}
+                  to="/auth/logout"
+                  className="text-white rounded-3xl px-3 py-2 text-lg font-medium bg-red-600 hover:bg-red-700"
+                >
+                  Logout
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
       <div
         className={`${isOpen ? "block" : "hidden"} sm:hidden`}
         id="mobile-menu"
@@ -137,20 +152,32 @@ function Navbar() {
           >
             Contact
           </Link>
-          <Link
-            onClick={() => setIsOpen(!isOpen)}
-            to="/auth/login"
-            className="text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Login
-          </Link>
-          <Link
-            onClick={() => setIsOpen(!isOpen)}
-            to="/auth/register"
-            className="text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Sign In
-          </Link>
+          {!isLogged ? (
+            <>
+              <Link
+                onClick={() => setIsOpen(!isOpen)}
+                to="/auth/login"
+                className="text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                onClick={() => setIsOpen(!isOpen)}
+                to="/auth/register"
+                className="text-white block px-3 py-2 rounded-3xl text-base font-medium bg-gray-600 hover:bg-gray-700"
+              >
+                Sign In
+              </Link>
+            </>
+          ) : (
+            <div
+              onClick={LogoutHandler}
+              to="/auth/logout"
+              className="text-white block px-3 py-2 rounded-3xl text-base font-medium bg-red-600 hover:bg-red-700"
+            >
+              Logout
+            </div>
+          )}
         </div>
       </div>
     </nav>
