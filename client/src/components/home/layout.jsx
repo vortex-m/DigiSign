@@ -4,9 +4,9 @@ import NavBar from "./header";
 
 function HomeLayout() {
   return (
-    <div className="bg-blue-50">
+    <div className=" bg-gradient-to-t from-[#537895] to-[#09203f]">
       <NavBar />
-      <main className="pt-[10svh]">
+      <main className="pt-[10svh] mx-auto w-full px-6 lg:w-[80%]">
         <Outlet />
       </main>
     </div>
