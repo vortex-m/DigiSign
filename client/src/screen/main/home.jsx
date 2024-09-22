@@ -1,30 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import Bg from "../../assets/png/bg-feature.png";
+import Galaxy from "../../assets/png/testimonial-4-bg.png";
+import Lock from "../../assets/png/feature-card-thumb-3.png";
+import Circle from "../../assets/png/circle002.png";
 import { FaFileSignature, FaShieldAlt, FaUserCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Modal from "../../components/modal/Modal";
+import "../../assets/style.css";
 
 function Home({ isLogged }) {
- const  UploadeHandel = () => {
-  try {
+  const [open, setOpen] = useState(false);
+  const UploadeHandel = () => {
+    try {
       if (isLogged) {
         alert("You are logged in!");
       } else {
         alert("Please Login...");
       }
-  } catch (error) {
-    console.error(error);
-    alert("An error occurred while processing your request.");
-    
-  }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while processing your request.");
+    }
+  };
+
+  const Click = () => {
+    setOpen(true);
   };
   return (
-    <div className="relative min-h-[90svh] z-0">
+    <div className="relative min-h-[90svh]">
+      {/* Absolute Bg */}
       <img
         src={Bg}
         alt="Background"
-        className="absolute bottom-0 opacity-30 left-0 right-0"
+        className="absolute bottom-0 z-0 opacity-30 left-0 right-0"
       />
-      <div className="flex flex-col items-center space-y-5 justify-center h-[60svh] text-white p-4">
+      <img
+        src={Galaxy}
+        alt=""
+        className="absolute opacity-80 z-0 w-[50%] right-0 left-0 "
+      />
+      <img
+        src={Lock}
+        alt=""
+        className="absolute opacity-50 z-0 w-[20%] float-animation -right-[5%] bottom-[35%] "
+      />
+      <img
+        src={Circle}
+        alt=""
+        className="absolute opacity-20 z-0 w-[50%] -bottom-[10%] -left-[20%]"
+      />
+      {/* End Bg */}
+
+      <div className="flex flex-col z-10 relative items-center space-y-10 justify-center h-[80svh] text-white p-4">
         <h1 className="text-5xl font-bold text-center text-blue-500">
           Welcome to DigiSign
         </h1>
@@ -41,7 +68,8 @@ function Home({ isLogged }) {
           </button>
           {/* </Link> */}
           {!isLogged && (
-            <Link to="/auth/login">
+            // <Link to="/auth/login">
+            <Link onClick={Click}>
               <button className="px-6 py-3 bg-gray-200 text-blue-500 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300">
                 Login
               </button>
@@ -50,7 +78,9 @@ function Home({ isLogged }) {
         </div>
       </div>
 
-      {/* New Section: Features */}
+      <Modal open={open} onClose={() => setOpen(false)}>
+        Login Page
+      </Modal>
     </div>
   );
 }

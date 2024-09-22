@@ -1,36 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
-import Image from "../../assets/png/feature-shape-12.png";
 
-function Login({ setToken }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const loginHandler = async (e) => {
-    e.preventDefault();
-    try {
-      // const response = await axios.post("http://localhost:5000/api/auth/login", {
-      //   email,
-      //   password,
-      // });
-
-      // const { token } = response.data;
-      const token = "shrawanToken";
-      // Store the token and update app state
-      setToken(token);
-      // localStorage.setItem("token", token);
-
-      // Redirect to the dashboard or home page
-      window.location.href = "/";
-    } catch (error) {
-      setError("Login failed. Please check your email and password.");
-    }
-  };
-
+function LoginModal() {
   return (
-    <section className="min-h-screen flex flex-col bg-[#1A3553]">
+    <section className={`fixed inset-0 ${open ? "bg-blue-50" : "invisible"}`}>
       <div className="ml-16 mt-10">
         <Link
           to="/"
@@ -98,4 +71,4 @@ function Login({ setToken }) {
   );
 }
 
-export default Login;
+export default LoginModal;
